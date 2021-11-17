@@ -1,0 +1,9 @@
+kubectl apply -f j-starter-deployment.yaml
+kubectl apply -f j-starter-service.yaml
+kubectl describe service j-starter-service
+
+kubectl get pod -o wide
+
+
+kubectl delete -f j-starter-service.yaml
+kubectl delete -f j-starter-deployment.yaml

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: j-mysql-deployment
+  labels:
+    app: j-mysql
+spec:
+  selector:
+    matchLabels:
+      app: j-mysql
+  template:
+    metadata:
+      labels:
+        app: j-mysql
+    spec:
+      containers:
+      - name: jmysql
+        image: mysql:8.0
+#        command: ["mysqld"]
+#        args: ["--user=root", "--initialize", "--max-connections=256", "--sql_mode=NO_ZERO_IN_DATE,NO_ENGINE_SUBSTITUTION"]
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: j-mysql-secret
+              key: j-mysql-root-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: j-mysql-service
+spec:
+  selector:
+    app: j-mysql
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+    nodePort: 30002

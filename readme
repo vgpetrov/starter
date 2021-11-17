@@ -1,0 +1,9 @@
+docker build -t java-starter .
+docker network create java-starter-network
+docker run -d -it --network java-starter-network -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test --name java-starter-mysql mysql:8.0
+docker run -p 8081:8080 -e MYSQL_HOST=java-starter-mysql --network java-starter-network java-starter
+
+
+
+docker network connect myNetwork web1
+docker network connect myNetwork web2

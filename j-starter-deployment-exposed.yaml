@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: j-starter-deployment
+  labels:
+    app: j-starter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: j-starter
+  template:
+    metadata:
+      labels:
+        app: j-starter
+    spec:
+      containers:
+      - name: j-starter
+        image: j-starter:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: j-mysql-configmap
+              key: database_url
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: j-mysql-secret
+              key: j-mysql-root-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: j-starter-service
+spec:
+  selector:
+    app: j-starter
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30002
+

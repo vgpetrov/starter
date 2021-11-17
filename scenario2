@@ -1,0 +1,9 @@
+1. Create MySQL deployment
+2. Create MySQL secret
+3. Create MySQL internal service
+4. External service
+   minikube service NAME
+
+
+echo -n 'password' | base64
+

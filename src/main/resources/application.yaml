@@ -1,0 +1,36 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}/test?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true
+    username: root
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  flyway:
+    locations: classpath:db/migration
+
+#management:
+#  endpoint:
+#    metrics:
+#      enabled: true
+#    prometheus:
+#      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,prometheus
+#  metrics:
+#    export:
+#      prometheus:
+#        enabled: true
