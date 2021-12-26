@@ -1,0 +1,10 @@
+minikube start
+install ingress in minikube
+minikube tunnel
+
+kubectl apply -f j-mysql-configmap.yaml
+kubectl apply -f j-mysql-secret.yaml
+kubectl apply -f j-starter-deployment-internal.yaml
+kubectl apply -f ingress-jstarter.yaml
+
+/etc/hosts
